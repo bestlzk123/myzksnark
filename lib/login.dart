@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'PageState.dart';
 import 'PersistentStorage.dart';
@@ -137,7 +136,7 @@ class _Login extends State<Login> {
   }
   @override
   Widget build(BuildContext context){
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Form表单示例',
       home: new Scaffold(
         body: new Column(

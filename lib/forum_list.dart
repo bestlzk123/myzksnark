@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/post.dart';
 
+import 'entity/note.dart';
+
 
 class ListPage extends StatefulWidget {
 
@@ -17,8 +19,8 @@ class ListPage extends StatefulWidget {
 class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
   ScrollController _scrollController =
   ScrollController(initialScrollOffset: 5, keepScrollOffset: true);
-  int _size = 2;
-  //List<Note> _noteList = List();
+  int _size = 0;
+  final List<Note> _noteList = List.empty(growable: true);
   //StreamSubscription subscription;
 
   // @override
@@ -36,7 +38,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-
+    debugMode();
     return new Scaffold(
       body : new Container(
       child: RefreshIndicator(
@@ -160,7 +162,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        "hhhhhh",
+                        _noteList.elementAt(index).title,
                         //'${DateTime.fromMillisecondsSinceEpoch(_noteList.elementAt(index).time).day}',
                         style: TextStyle(
                             color: Color.fromRGBO(52, 52, 54, 1),
@@ -210,8 +212,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
             Container(
               margin: EdgeInsets.all(10),
               child: Text(
-                "jason",
-                //_noteList.elementAt(index).content,
+                _noteList.elementAt(index).content,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -334,4 +335,14 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
 
   @override
   bool get wantKeepAlive => true;
+  void debugMode() {
+    _noteList.clear();
+    _size = 0;
+    _noteList.add(Note.fromMap({columnId:1,
+    columnTitle:"testTitle",
+    columnContent:"起初　神创造天地。1:2 地是空虚混沌．渊面黑暗．神的灵运行在水面上1:3 神说、要有光、就有了光。1:4 神看光是好的、就把光暗分开了。",
+    columnTime:DateTime.now().millisecondsSinceEpoch,
+    columnReply:2}));
+    _size+=1;
+  }
 }
