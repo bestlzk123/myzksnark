@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'PageState.dart';
-import 'PersistentStorage.dart';
+import 'utils/global_value.dart';
 
 class httpRequest {
   static Future<void> requestNetwork(String stdNumber,String password) async {

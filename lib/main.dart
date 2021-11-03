@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/utils/note_db_helper.dart';
+import 'package:sqflite/sqflite.dart';
 import 'PageState.dart';
-import 'PersistentStorage.dart';
+import 'utils/global_value.dart';
 import 'forum_list.dart';
 import 'login.dart';
+
 bool debugFlag = true;
 void main() {
   realRunApp();
@@ -11,18 +14,21 @@ void main() {
 void realRunApp() async {
   runApp(MyApp());
   SpUtil.getInstance();
+  DbUtil.getInstance();
+  print("initial success");
 }
 // void main() => requestNetwork();
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Demo',
       // theme: ThemeData(
       //   primarySwatch: Colors.blue,
       // ),
-      home: MyHomePage(),
+      home: ListPage(),
     );
   }
 }

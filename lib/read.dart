@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/utils/global_value.dart';
+import 'package:myapp/utils/note_db_helper.dart';
+
+import 'entity/note.dart';
 
 class ReadPage extends StatefulWidget {
-  // const ReadPage({
-  //   Key key,
-  //   @required this.noteDbHelpter,
-  //   @required this.id,
-  // }) : super(key: key);
-
-  // final NoteDbHelper noteDbHelpter;
-  // final int id;
+  const ReadPage({
+    required this.id,
+  });
+  final int id;
 
   @override
   State<StatefulWidget> createState() {
@@ -18,19 +18,19 @@ class ReadPage extends StatefulWidget {
 }
 
 class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
-  // String note = "";
-  // Note noteEntity;
-
+  String note = "";
+  late Note noteEntity;
   @override
   void initState() {
+    print(widget.id);
     super.initState();
-    // WidgetsBinding.instance.addObserver(this);
-    // widget.noteDbHelpter.getNoteById(widget.id).then((notes) {
-    //   setState(() {
-    //     note = notes.content;
-    //     noteEntity = notes;
-    //   });
-    // });
+    //WidgetsBinding.instance.addObserver(this);
+    DbUtil.noteDbHelper.getNoteById(widget.id).then((notes) {
+    setState(() {
+        note = notes!.content;
+        noteEntity = notes;
+      });
+    });
   }
 
   @override
@@ -106,7 +106,7 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
               child: Container(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: Text(
-                  '这个才是正文',
+                  note,
                   style: TextStyle(fontSize: 18),
                 ),
               ),

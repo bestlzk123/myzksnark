@@ -2,13 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/post.dart';
+import 'package:myapp/read.dart';
+import 'package:myapp/utils/global_value.dart';
+import 'package:myapp/utils/note_db_helper.dart';
 
 import 'entity/note.dart';
 
 
 class ListPage extends StatefulWidget {
-
+  ListPage();
   @override
   State<StatefulWidget> createState() {
     print("runrun");
@@ -65,7 +67,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                                 return ReadPage(
-
+                                    id:index,
                                 );
                               }));
                         },
@@ -77,7 +79,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
               ),
             ],
           ),
-          onRefresh: nouse),
+          onRefresh: _onRefresh),
     ),);
   }
 
@@ -126,28 +128,29 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
   //       });
   // }
 
-  // 刷新
-  // Future<Null> _onRefresh() async {
-  //   await Future.delayed(Duration(seconds: 1), () {
-  //     print('refresh');
-  //     widget.noteDbHelpter.getDatabase().then((database) {
-  //       database
-  //           .query('notes', orderBy: 'time DESC')
-  //           .then((List<Map<String, dynamic>> records) {
-  //         _size = records.length;
-  //         _noteList.clear();
-  //         for (int i = 0; i < records.length; i++) {
-  //           _noteList.add(Note.fromMap(records.elementAt(i)));
-  //         }
-  //         setState(() {
-  //           print(_noteList.length);
-  //         });
-  //       });
-  //     });
-  //   });
-  // }
+  //刷新
+  Future<void> _onRefresh() async {
+    await Future.delayed(const Duration(seconds: 1), () {
+      print('refresh');
+      DbUtil.noteDbHelper.getDatabase().then((database) {
+        database
+            .query('notes', orderBy: 'time DESC')
+            .then((List<Map<String, dynamic>> records) {
+          _size = records.length;
+          _noteList.clear();
+          for (int i = 0; i < records.length; i++) {
+            _noteList.add(Note.fromMap(records.elementAt(i)));
+          }
+          setState(() {
+            print(_noteList.length);
+          });
+        });
+      });
+    });
+  }
 
   Widget getItem(int index) {
+    print("item");
     return Container(
       child: Card(
         margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
@@ -336,14 +339,17 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
   void debugMode() {
-    _noteList.clear();
-    _size = 0;
-    _noteList.add(Note.fromMap({columnId:1,
-    columnTitle:"testTitle",
-    columnContent:"起初　神创造天地。1:2 地是空虚混沌．渊面黑暗．神的灵运行在水面上1:3 神说、要有光、就有了光。1:4 神看光是好的、就把光暗分开了。",
-    columnTime:DateTime.now().millisecondsSinceEpoch,
-    columnReply:2,
-    columnReplyId:0}));
-    _size+=1;
+    DbUtil.noteDbHelper.deleteById(0);
+
+    Note note = Note.fromMap({
+      columnTitle:"testTitle",
+      columnContent:"起初　神创造天地。1:2 地是空虚混沌．渊面黑暗．神的灵运行在水面上1:3 神说、要有光、就有了光。1:4 神看光是好的、就把光暗分开了。",
+      columnTime:DateTime.now().millisecondsSinceEpoch,
+      columnReply:2,
+      columnReplyId:0,
+      columnPostId:0});
+
+    DbUtil.noteDbHelper.insert(note);
+    //_onRefresh();
   }
 }

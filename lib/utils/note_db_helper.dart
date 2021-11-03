@@ -10,7 +10,7 @@ class NoteDbHelper {
     db = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute(
-          "create table notes (_id INTEGER primary key autoincrement,title TEXT not null,content TEXT not null,star INTEGER not null,time INTEGER not null,weather INTEGER not null)");
+          "create table notes (_id INTEGER primary key autoincrement,title TEXT not null,content TEXT not null,time INTEGER not null,reply INTEGER not null,reply_id INTEGER not null,post_id INTEGER not null)");
       print("Table is created");
     });
   }
@@ -23,6 +23,8 @@ class NoteDbHelper {
   // 增加一条数据
   Future<Note> insert(Note note) async {
     note.id = await db.insert("notes", note.toMap());
+    print("jjj");
+    print(note.id);
     return note;
   }
 
@@ -35,6 +37,8 @@ class NoteDbHelper {
           columnContent,
           columnTime,
           columnReply,
+          columnPostId,
+          columnReplyId,
         ],
         where: '_id = ?',
         whereArgs: [id]);
@@ -54,6 +58,8 @@ class NoteDbHelper {
           columnContent,
           columnTime,
           columnReply,
+          columnPostId,
+          columnReplyId,
         ],
         where: 'content like ? ORDER BY time ASC',
         whereArgs: ["%" + text + "%"]);
