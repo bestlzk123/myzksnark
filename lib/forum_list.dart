@@ -339,7 +339,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
   void debugMode() {
-    DbUtil.noteDbHelper.deleteById(0);
+    //DbUtil.noteDbHelper.deleteById(0);
 
     Note note = Note.fromMap({
       columnTitle:"testTitle",
@@ -349,7 +349,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
       columnReplyId:0,
       columnPostId:0});
 
-    DbUtil.noteDbHelper.insert(note);
-    //_onRefresh();
+    //DbUtil.noteDbHelper.insert(note);
+    _onRefresh();
   }
 }

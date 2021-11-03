@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 
 // 数据库操作工具类
 class NoteDbHelper {
-  late Database db;
+  Database? db ;
 
   Future open(String path) async {
     // 打开/创建数据库
@@ -16,13 +16,13 @@ class NoteDbHelper {
   }
 
   Future<Database> getDatabase() async {
-    Database database = db;
+    Database database = db!;
     return database;
   }
 
   // 增加一条数据
   Future<Note> insert(Note note) async {
-    note.id = await db.insert("notes", note.toMap());
+    note.id = await db!.insert("notes", note.toMap());
     print("jjj");
     print(note.id);
     return note;
@@ -30,7 +30,7 @@ class NoteDbHelper {
 
   // 通过ID查询一条数据
   Future<Note?> getNoteById(int id) async {
-    List<Map<String,dynamic>> maps = await db.query('notes',
+    List<Map<String,dynamic>> maps = await db!.query('notes',
         columns: [
           columnId,
           columnTitle,
@@ -51,7 +51,7 @@ class NoteDbHelper {
   // 通过关键字查询数据
   Future<List<Note>?> getNoteByContent(String text) async {
     List<Note> _noteList = List.empty(growable: true);
-    List<Map<String,dynamic>> maps = await db.query('notes',
+    List<Map<String,dynamic>> maps = await db!.query('notes',
         columns: [
           columnId,
           columnTitle,
@@ -74,15 +74,15 @@ class NoteDbHelper {
 
   // 通过ID删除一条数据
   Future<int> deleteById(int id) async {
-    return await db.delete('notes', where: '_id = ?', whereArgs: [id]);
+    return await db!.delete('notes', where: '_id = ?', whereArgs: [id]);
   }
 
   // 更新数据
   Future<int> update(Note note) async {
-    return await db
+    return await db!
         .update('notes', note.toMap(), where: '_id = ?', whereArgs: [note.id]);
   }
 
   // 关闭数据库
-  Future close() async => db.close();
+  Future close() async => db!.close();
 }

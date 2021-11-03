@@ -12,9 +12,10 @@ void main() {
 }
 
 void realRunApp() async {
+
   runApp(MyApp());
-  SpUtil.getInstance();
-  DbUtil.getInstance();
+  await SpUtil.getInstance();
+  await DbUtil.getInstance();
   print("initial success");
 }
 // void main() => requestNetwork();
