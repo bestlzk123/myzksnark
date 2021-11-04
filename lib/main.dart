@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/utils/note_db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'PageState.dart';
+import 'home.dart';
 import 'utils/global_value.dart';
 import 'forum_list.dart';
 import 'login.dart';
@@ -12,11 +13,10 @@ void main() {
 }
 
 void realRunApp() async {
-
   runApp(MyApp());
-  await SpUtil.getInstance();
-  await DbUtil.getInstance();
-  print("initial success");
+  //await SpUtil.getInstance();
+  //await DbUtil.getInstance();
+  //print("initial success");
 }
 // void main() => requestNetwork();
 
@@ -29,39 +29,40 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData(
       //   primarySwatch: Colors.blue,
       // ),
-      home: ListPage(),
+      home: HomePage(),
     );
   }
 }
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.computer),
-        onPressed: (){
-          if (debugFlag) {
-            print("debug");
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ListPage())
-            );
-          } else if (SpUtil.preferences.getString('timeInfo') != null && !debugFlag){
-            print("skip");
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SyllabusPage())
-            );
-          } else {
-            print("nskip");
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Login())
-          );}
-        },
-      ),
-
-    );
-  }
-}
+//
+// class MyHomePage extends StatelessWidget {
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       floatingActionButton: FloatingActionButton(
+//         child: const Icon(Icons.computer),
+//         onPressed: (){
+//           if (debugFlag) {
+//             print("debug");
+//             Navigator.push(
+//                 context,
+//                 MaterialPageRoute(builder: (context) => ListPage())
+//             );
+//           } else if (SpUtil.preferences.getString('timeInfo') != null && !debugFlag){
+//             print("skip");
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (context) => SyllabusPage())
+//             );
+//           } else {
+//             print("nskip");
+//           Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (context) => Login())
+//           );}
+//         },
+//       ),
+//
+//     );
+//   }
+// }
