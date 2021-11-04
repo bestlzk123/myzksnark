@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/utils/global_value.dart';
-import 'package:myapp/utils/note_db_helper.dart';
-
 import 'entity/note.dart';
 
 class ReadPage extends StatefulWidget {
@@ -19,6 +17,7 @@ class ReadPage extends StatefulWidget {
 
 class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
   String note = "";
+  String title = "";
   late Note noteEntity;
   @override
   void initState() {
@@ -29,6 +28,7 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
     setState(() {
         note = notes!.content;
         noteEntity = notes;
+        title = notes!.title;
       });
     });
   }
@@ -38,7 +38,7 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(244, 244, 244, 1),
-        title: Text('日记详情'),
+        title: Text('内容详情'),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.edit),
@@ -68,33 +68,15 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.fromLTRB(50, 5, 10, 5),
-                      child: Icon(
-                        Icons.wb_sunny,
-                        size: 50,
-                        color: Color.fromRGBO(252, 205, 24, 1),
-                      ),
-                    ),
-                  ),
                   Container(
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          '这是标题？？',
+                          title,
                           style: TextStyle(
-                              color: Color.fromRGBO(149, 149, 148, 1),
-                              fontSize: 18),
-                        ),
-                        Text(
-                          '这是什么？副标题？',
-                          style: TextStyle(
-                              color: Color.fromRGBO(149, 149, 148, 1),
-                              fontSize: 18),
+                              fontSize: 25),
                         ),
                       ],
                     ),
@@ -116,41 +98,6 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
       ),
     );
   }
-
-  // //当移除渲染树的时候调用
-  // @override
-  // void deactivate() {
-  //   super.deactivate();
-  //   var bool = ModalRoute.of(context).isCurrent;
-  //   if (bool) {
-  //     widget.noteDbHelpter.getNoteById(widget.id).then((notes) {
-  //       setState(() {
-  //         note = notes.content;
-  //       });
-  //     });
-  //     // 发送事件、数据
-  //     eventBus.fire(NoteEvent(widget.id));
-  //   }
-  // }
-  //
-  // //APP生命周期监听
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   if (state == AppLifecycleState.resumed) {
-  //     //恢复可见
-  //     widget.noteDbHelpter.getNoteById(widget.id).then((notes) {
-  //       setState(() {
-  //         note = notes.content;
-  //       });
-  //     });
-  //   } else if (state == AppLifecycleState.paused) {
-  //     //处在并不活动状态，无法处理用户响应
-  //     //例如来电，画中画，弹框
-  //   } else if (state == AppLifecycleState.inactive) {
-  //     //不可见，后台运行，无法处理用户响应
-  //   }
-  //   super.didChangeAppLifecycleState(state);
-  // }
 
   //组件即将销毁时调用
   @override
@@ -174,13 +121,6 @@ class WritePageState extends State<WritePage> {
   @override
   void initState() {
     super.initState();
-    // if (widget.id != -1) {
-    //   widget.noteDbHelpter.getNoteById(widget.id).then((note) {
-    //     setState(() {
-    //       notes = note.content;
-    //     });
-    //   });
-    // }
   }
 
   @override

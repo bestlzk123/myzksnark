@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-
 import 'syllabus.dart';
 import 'utils/global_value.dart';
 
@@ -29,18 +27,18 @@ class httpRequest {
       String responseString = await response.transform(utf8.decoder).join();
       //print(responseString);
       Map<String, dynamic> map = json.decode(responseString);
-      print('看这里maptimeInfo: ${map['timeInfo']}');
-      print('看这里courseList: ${map['courseList']}');
+      // print('看这里maptimeInfo: ${map['timeInfo']}');
+      // print('看这里courseList: ${map['courseList']}');
       List classindex = [];
       for(var i in map['courseList']){
         var s = Map<String, dynamic>.from(i);
         print(s);
         Pattern r;
         classindex.add("\""+s["coursename"].replaceAll(RegExp('\\(.*\\)'), '') + "@" + s["roomname"]+"\"");
-        print("????快来"+s["coursename"].replaceAll(RegExp('\\(.*\\)'), ''));
+        // print("????快来"+s["coursename"].replaceAll(RegExp('\\(.*\\)'), ''));
       }
       SpUtil.preferences.setString('timeInfo',map['timeInfo'].toString());
-      print("hhhhhhhhhhhhh"+SpUtil.preferences.getString('timeInfo').toString());
+      // print("hhhhhhhhhhhhh"+SpUtil.preferences.getString('timeInfo').toString());
       SpUtil.preferences.setString('classindex',classindex.toString());
     } else {
       print(response.statusCode);

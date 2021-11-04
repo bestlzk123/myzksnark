@@ -1,9 +1,6 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/utils/global_value.dart';
-
 import 'login.dart';
 import 'main.dart';
 

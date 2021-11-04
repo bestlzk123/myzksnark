@@ -229,24 +229,6 @@ class PageState extends State<SyllabusPage> {
                                             ),
                                           )),
                                     ),
-                                    /*Flexible(
-                                      flex: 1,
-                                      child: Container(
-                                          width: double.infinity,
-                                          height: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            // border: Border.all(color: Colors.black12, width: 0.5),
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                  color: Colors.black12,
-                                                  width: 1),
-                                              right: BorderSide(
-                                                  color: Colors.black12,
-                                                  width: 1),
-                                            ),
-                                          )),
-                                    ),*/
                                   ],
                                 ),
                                 if (timeinfo[index] != 0)
