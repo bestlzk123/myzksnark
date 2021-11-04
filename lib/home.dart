@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/syllabus_home.dart';
@@ -69,5 +68,4 @@ class HomePageState extends State<HomePage> {
       }
     });
   }
-
 }
