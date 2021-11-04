@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 
-bool debugFlag = true;
+bool debugFlag = false;
 void main() {
   realRunApp();
 }
 
 void realRunApp() async {
   runApp(MyApp());
-  //await SpUtil.getInstance();
-  //await DbUtil.getInstance();
-  //print("initial success");
 }
-// void main() => requestNetwork();
 
 class MyApp extends StatelessWidget {
   @override

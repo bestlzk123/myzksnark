@@ -59,7 +59,6 @@ class PageState extends State<SyllabusPage> {
   List classStartTime = ["8:00","8:55","9:55","10:50","11:45","13:30","14:25","15:25","16:20","17:15","18:30","19:25","20:20","21:15"];
   List classEndTime = ["8:45","9:40","10:40","11:35","12:30","14:15","15:10","16:10","17:05","18:00","19:15","20:10","21:05","22:00"];
   PageState(this._stimeinfo, this._scindex);
-
   @override
   void initState() {
     super.initState();
@@ -87,6 +86,7 @@ class PageState extends State<SyllabusPage> {
         });
       }
     }
+    if (_stimeinfo == "" || _scindex == "") return;
     // print('Recent monday '+DateTime.now().day.toString());
     var sss = json.decode(_stimeinfo);
     timeinfo.clear();

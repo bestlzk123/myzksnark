@@ -69,9 +69,12 @@ class SyllabusPage extends StatefulWidget {
   @override
 
   State<StatefulWidget> createState() {
-    print(SpUtil.preferences.getString('timeInfo'));
-    print(SpUtil.preferences.getString('classindex'));
-    return PageState(SpUtil.preferences.getString('timeInfo'),SpUtil.preferences.getString('classindex'));
+    if (SpUtil.preferences.getString('timeInfo') != null) {
+      print(SpUtil.preferences.getString('timeInfo'));
+      print(SpUtil.preferences.getString('classindex'));
+      return PageState(SpUtil.preferences.getString('timeInfo'),
+          SpUtil.preferences.getString('classindex'));
+    } else return PageState("","");
   }
 }
 
@@ -90,7 +93,7 @@ class MyRaisedButton extends StatelessWidget {
       onPressed: () {
         //第一种写法
         Navigator.push(context,
-            new MaterialPageRoute(builder: (context) => _pageNavigator));
+            MaterialPageRoute(builder: (context) => _pageNavigator));
         //第二张路由写法
 //        Navigator.of(context)
 //            .push(new MaterialPageRoute(builder: (context) => _pageNavigator));
@@ -136,8 +139,8 @@ class _Login extends State<Login> {
   Widget build(BuildContext context){
     return MaterialApp(
       title: 'Form表单示例',
-      home: new Scaffold(
-        body: new Column(
+      home: Scaffold(
+        body: Column(
           children: <Widget>[
             new Container(
                 padding: EdgeInsets.only(top: 100.0, bottom: 10.0),
