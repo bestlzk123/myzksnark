@@ -7,18 +7,14 @@ import 'utils/global_value.dart';
 import 'forum_list.dart';
 import 'login.dart';
 
-bool debugFlag = true;
+bool debugFlag = false;
 void main() {
   realRunApp();
 }
 
 void realRunApp() async {
   runApp(MyApp());
-  //await SpUtil.getInstance();
-  //await DbUtil.getInstance();
-  //print("initial success");
 }
-// void main() => requestNetwork();
 
 class MyApp extends StatelessWidget {
   @override
