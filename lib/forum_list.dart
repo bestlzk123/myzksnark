@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/read.dart';
 import 'package:myapp/utils/global_value.dart';
-import 'package:myapp/utils/note_db_helper.dart';
 
 import 'entity/note.dart';
 
@@ -19,7 +18,7 @@ class ListPage extends StatefulWidget {
 }
 
 class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
-  ScrollController _scrollController =
+  final ScrollController _scrollController =
   ScrollController(initialScrollOffset: 5, keepScrollOffset: true);
   int _size = 0;
   final List<Note> _noteList = List.empty(growable: true);
@@ -40,7 +39,6 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    debugMode();
     return new Scaffold(
       body : new Container(
       child: RefreshIndicator(
@@ -131,6 +129,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
   //刷新
   Future<void> _onRefresh() async {
     await Future.delayed(const Duration(seconds: 1), () {
+
       print('refresh');
       DbUtil.noteDbHelper.getDatabase().then((database) {
         database
@@ -338,18 +337,5 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
 
   @override
   bool get wantKeepAlive => true;
-  void debugMode() {
-    //DbUtil.noteDbHelper.deleteById(0);
 
-    Note note = Note.fromMap({
-      columnTitle:"testTitle",
-      columnContent:"起初　神创造天地。1:2 地是空虚混沌．渊面黑暗．神的灵运行在水面上1:3 神说、要有光、就有了光。1:4 神看光是好的、就把光暗分开了。",
-      columnTime:DateTime.now().millisecondsSinceEpoch,
-      columnReply:2,
-      columnReplyId:0,
-      columnPostId:0});
-
-    //DbUtil.noteDbHelper.insert(note);
-    _onRefresh();
-  }
 }

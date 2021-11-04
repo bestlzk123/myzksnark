@@ -15,9 +15,9 @@ class DbUtil{
   static late NoteDbHelper noteDbHelper;
   static Future<bool> getInstance() async{
     noteDbHelper = NoteDbHelper();
-    await getDatabasesPath().then((string) {
+    await getDatabasesPath().then((string) async {
       String path = join(string, 'notesDb.db');
-      noteDbHelper.open(path);
+      await noteDbHelper.open(path);
     });
     return true;
   }

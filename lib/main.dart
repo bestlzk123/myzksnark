@@ -7,7 +7,7 @@ import 'utils/global_value.dart';
 import 'forum_list.dart';
 import 'login.dart';
 
-bool debugFlag = false;
+bool debugFlag = true;
 void main() {
   realRunApp();
 }
