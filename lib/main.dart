@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/utils/note_db_helper.dart';
 import 'package:sqflite/sqflite.dart';
-import 'PageState.dart';
+import 'syllabus.dart';
 import 'home.dart';
 import 'utils/global_value.dart';
 import 'forum_list.dart';

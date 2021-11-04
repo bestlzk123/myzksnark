@@ -1,6 +1,6 @@
 # myapp
 
-A new Flutter project.
+这个是一个复旦版的超级课程表 目前正在开发论坛功能.
 
 ## Getting Started
 
