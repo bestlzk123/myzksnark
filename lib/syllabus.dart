@@ -3,6 +3,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
 
+class Class {
+  String title;
+  String description;
+  Class(this.title, this.description);
+}
+
+class ClassDetail extends StatelessWidget {
+  var _classindex = 0;
+  Class classinfo = Class("高等数学", "周某某教授@综合楼201");
+  ClassDetail(this._classindex);
+
+  @override
+  void initState() {
+    classinfo.description = _classindex.toString();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    initState();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('${classinfo.title}'),
+      ),
+      body: Center(
+        child: Text('${classinfo.description}'),
+      ),
+    );
+  }
+}
 
 class SpaceWidget extends StatelessWidget {
   double height, width;
@@ -14,15 +43,13 @@ class SpaceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      Container(
-        height: height,
-        width: width,
-        color: Colors.transparent,
-      );
+    return Container(
+      height: height,
+      width: width,
+      color: Colors.transparent,
+    );
   }
 }
-
 
 class PageState extends State<SyllabusPage> {
   var colorList = [
@@ -37,27 +64,147 @@ class PageState extends State<SyllabusPage> {
   var infoList = ["高等数学-周某某教授@综合楼201", "大学英语-王某某讲师@行政楼501"];
   var weekList = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
 
-  var timeinfo = [0,0,1,0,0,0,0,
-    0,2,0,0,0,0,0,
-    0,0,2,0,0,0,0,
-    0,0,1,0,0,0,0,
-    0,0,0,3,0,0,0,
-    0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,
-    0,0,1,0,0,0,0,
-    0,2,0,0,0,0,0,
-    0,0,2,0,0,0,0,
-    0,0,1,0,0,0,0];
-  var classindex = ["高等数学-周某某教授@综合楼201", "大学英语-王某某讲师@行政楼501", "大学英语-王某某讲师@行政楼401"];
+  var timeinfo = [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+  ];
+  var classindex = [
+    "高等数学-周某某教授@综合楼201",
+    "大学英语-王某某讲师@行政楼501",
+    "大学英语-王某某讲师@行政楼401"
+  ];
   var dateList = [];
   var currentWeekIndex = 0;
   var _stimeinfo;
   var _scindex;
-  List classStartTime = ["8:00","8:55","9:55","10:50","11:45","13:30","14:25","15:25","16:20","17:15","18:30","19:25","20:20","21:15"];
-  List classEndTime = ["8:45","9:40","10:40","11:35","12:30","14:15","15:10","16:10","17:05","18:00","19:15","20:10","21:05","22:00"];
+  List classStartTime = [
+    "8:00",
+    "8:55",
+    "9:55",
+    "10:50",
+    "11:45",
+    "13:30",
+    "14:25",
+    "15:25",
+    "16:20",
+    "17:15",
+    "18:30",
+    "19:25",
+    "20:20",
+    "21:15"
+  ];
+  List classEndTime = [
+    "8:45",
+    "9:40",
+    "10:40",
+    "11:35",
+    "12:30",
+    "14:15",
+    "15:10",
+    "16:10",
+    "17:05",
+    "18:00",
+    "19:15",
+    "20:10",
+    "21:05",
+    "22:00"
+  ];
   PageState(this._stimeinfo, this._scindex);
   @override
   void initState() {
@@ -90,17 +237,15 @@ class PageState extends State<SyllabusPage> {
     // print('Recent monday '+DateTime.now().day.toString());
     var sss = json.decode(_stimeinfo);
     timeinfo.clear();
-    for(var i in sss){
+    for (var i in sss) {
       timeinfo.add(i);
     }
     classindex.clear();
     var ssss = json.decode(_scindex);
-    for(var i in ssss){
+    for (var i in ssss) {
       classindex.add(i);
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -123,33 +268,33 @@ class PageState extends State<SyllabusPage> {
                     child: Center(
                       child: index == 0
                           ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("星期",
-                              style: TextStyle(
-                                  fontSize: 14, color: Colors.black87)),
-                          SpaceWidget(height: 5),
-                          Text("日期", style: TextStyle(fontSize: 12)),
-                        ],
-                      )
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("星期",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black87)),
+                                SpaceWidget(height: 5),
+                                Text("日期", style: TextStyle(fontSize: 12)),
+                              ],
+                            )
                           : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(weekList[index - 1],
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: index == currentWeekIndex
-                                      ? Colors.lightBlue
-                                      : Colors.black87)),
-                          SpaceWidget(height: 5),
-                          Text(dateList[index - 1],
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: index == currentWeekIndex
-                                      ? Colors.lightBlue
-                                      : Colors.black87)),
-                        ],
-                      ),
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(weekList[index - 1],
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: index == currentWeekIndex
+                                            ? Colors.lightBlue
+                                            : Colors.black87)),
+                                SpaceWidget(height: 5),
+                                Text(dateList[index - 1],
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: index == currentWeekIndex
+                                            ? Colors.lightBlue
+                                            : Colors.black87)),
+                              ],
+                            ),
                     ),
                   );
                 }),
@@ -168,20 +313,24 @@ class PageState extends State<SyllabusPage> {
                             crossAxisCount: 1, childAspectRatio: 1 / 2),
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
-                            // width: 25,
-                            // height:s 80,
-                              child: Column(children:[
-                                Center(
-                                  child: Text(
-                                    (index + 1).toInt().toString(),
-                                      style: TextStyle(fontSize: 15))
-                                ),
-                                Center(
-                                    child: Text(
-                                        (classStartTime[index]).toString()
-                                            +"\n"+(classEndTime[index]).toString(),
-                                      style: TextStyle(fontSize: 13,fontWeight: FontWeight.w300),)
-                                )],
+                              // width: 25,
+                              // height:s 80,
+                              child: Column(
+                                children: [
+                                  Center(
+                                      child: Text(
+                                          (index + 1).toInt().toString(),
+                                          style: TextStyle(fontSize: 15))),
+                                  Center(
+                                      child: Text(
+                                    (classStartTime[index]).toString() +
+                                        "\n" +
+                                        (classEndTime[index]).toString(),
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w300),
+                                  ))
+                                ],
                               ),
                               decoration: BoxDecoration(
                                 color: Color(0xff5ff5),
@@ -209,7 +358,7 @@ class PageState extends State<SyllabusPage> {
                               children: [
                                 Column(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Flexible(
                                       flex: 1,
@@ -233,22 +382,36 @@ class PageState extends State<SyllabusPage> {
                                 ),
                                 if (timeinfo[index] != 0)
                                   Container(
-                                    margin: EdgeInsets.all(1),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2),
-                                      color: colorList[timeinfo[index] % 7],
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        classindex[timeinfo[index]-1],
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 11,
-                                            letterSpacing: 1),
+                                      margin: EdgeInsets.all(1),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(2),
+                                        color: colorList[timeinfo[index] % 7],
                                       ),
-                                    ),
-                                  )
+                                      child: Center(
+                                        child: TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          new ClassDetail(
+                                                              timeinfo[index] -
+                                                                  1)));
+                                            },
+                                            style: ButtonStyle(
+                                              visualDensity: VisualDensity(
+                                                  horizontal: -4.0,
+                                                  vertical: -4.0),
+                                            ),
+                                            child: Text(
+                                              classindex[timeinfo[index] - 1],
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10,
+                                                  letterSpacing: 1),
+                                            )),
+                                      ))
                               ],
                             ),
                           );
@@ -286,8 +449,8 @@ class PageState extends State<SyllabusPage> {
         ),
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            // width: 25,
-            // height: 80,
+              // width: 25,
+              // height: 80,
               child: Center(
                 child: Text(
                   (index + 1).toString(),
@@ -302,7 +465,7 @@ class PageState extends State<SyllabusPage> {
   );
 
   Widget _bottomView = SizedBox(
-    height: 30,
+    height: 10,
     child: Row(
       children: [
         //底部view可自行扩充
