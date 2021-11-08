@@ -10,11 +10,10 @@ class NoteDbHelper {
     db = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute(
-          "create table notes (_id INTEGER primary key autoincrement,title TEXT not null,content TEXT not null,time INTEGER not null,reply INTEGER not null,reply_id INTEGER not null,post_id INTEGER not null)");
+          "create table notes (_id INTEGER primary key autoincrement,title TEXT not null,content TEXT not null,time INTEGER not null,reply INTEGER not null,reply_id INTEGER not null,post_id INTEGER not null,user_id INTEGER not null)");
       print("Table is created");
     });
   }
-
   Future<Database> getDatabase() async {
     Database database = db!;
     return database;
@@ -23,7 +22,6 @@ class NoteDbHelper {
   // 增加一条数据
   Future<Note> insert(Note note) async {
     note.id = await db!.insert("notes", note.toMap());
-    print("jjj");
     print(note.id);
     return note;
   }
@@ -82,7 +80,10 @@ class NoteDbHelper {
     return await db!
         .update('notes', note.toMap(), where: '_id = ?', whereArgs: [note.id]);
   }
-
+  // 清除表格
+  Future<int> delete() async {
+    return await db!.delete('notes');
+  }
   // 关闭数据库
   Future close() async => db!.close();
 }
