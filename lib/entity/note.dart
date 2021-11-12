@@ -1,10 +1,10 @@
 const String tableName = 'postNotes'; // 表名
 const String columnId = '_id'; // 属性名
-const String columnTitle = 'title'; // 属性名
-const String columnContent = 'content'; // 属性名
-const String columnTime = "time"; //属性名
-const String columnReply = "reply"; //属性名
-const String columnPostId = "post_id"; //属性名
+const String columnTitle = 'theme'; // 属性名 theme
+const String columnContent = 'text'; // 属性名 text
+const String columnTime = "time"; //属性名 edit_time
+const String columnReply = "num"; //属性名 num
+const String columnPostId = "id"; //属性名 id
 const String columnReplyId = "reply_id";//属性名
 const String columnUserId = "user_id"; //属性名
 // 实体类
@@ -14,7 +14,7 @@ class Note {
   String content = "";
   int time = 0;
   int reply = 0;
-  int replyId = 0; // 帖子作为回帖的id，当为主题帖时，replyid = postid
+  int replyId = 0; // 帖子作为回帖的id，当为主题帖时，replyid = 1
   int postId = 0; // 帖子的父节点id
   int userId = 0 ;// 发帖人id
   // 将实体对象类转为数据集合
@@ -41,7 +41,7 @@ class Note {
     time = map[columnTime];
     reply = map[columnReply];
     replyId = map[columnReplyId];
-    postId = map[columnPostId];
-    userId = map[columnUserId];
+    postId = map[columnPostId] ?? 0;
+    userId = map[columnUserId]?? 0;
   }
 }

@@ -16,7 +16,7 @@ class HomePageState extends State<HomePage> {
   String title = 'FutureBuilder使用';
   var _futureBuilderFuture;
   int _currentIndex = 0;
-  void debugMode() {
+  void debugMode() async{
     // try {
     //   DbUtil.noteDbHelper.deleteById(0);
     // } catch(Exeception){};
@@ -28,7 +28,7 @@ class HomePageState extends State<HomePage> {
       columnReply:2,
       columnReplyId:0,
       columnPostId:0});
-    DbUtil.noteDbHelper.insert(note);
+    await DbUtil.noteDbHelper.insert(note);
   }
   Future<String> _gerData() async {
     await SpUtil.getInstance();
@@ -38,7 +38,6 @@ class HomePageState extends State<HomePage> {
   }
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     ///用_futureBuilderFuture来保存_gerData()的结果，以避免不必要的ui重绘
     _futureBuilderFuture = _gerData();

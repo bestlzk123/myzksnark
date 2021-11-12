@@ -28,7 +28,7 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
     setState(() {
         note = notes!.content;
         noteEntity = notes;
-        title = notes!.title;
+        title = notes.title;
       });
     });
   }
