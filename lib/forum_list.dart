@@ -51,7 +51,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                                 return ReadPage(
-                                    id:index,
+                                    id:index+1,
                                 );
                               }));
                         },
