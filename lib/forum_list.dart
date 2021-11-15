@@ -26,7 +26,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       body : new Container(
       child: RefreshIndicator(
           child: CustomScrollView(
@@ -52,7 +52,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                                 return ReadPage(
-                                    id:index+1,
+                                    id:_noteList[index].id,
                                 );
                               }));
                         },

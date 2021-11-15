@@ -76,8 +76,9 @@ class NoteTransporter {
       Map<String, dynamic> map = json.decode(responseString);
       for(var i in map['post_note']) {
         Note s = Note.fromMap(Map<String, dynamic>.from(i));
-        DbUtil.noteDbHelper.insert(s);
+        await DbUtil.noteDbHelper.insert(s);
       }
+
       return 0;
     }
     else {
