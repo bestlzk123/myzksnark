@@ -9,7 +9,7 @@ class NoteTransporter {
   static String backgroundUrl = '192.168.0.113:8080';
   //static String backgroundUrl = '192.168.0.108:8080';
   static Future<int> noteUpload(Note note) async {
-    const postName = "/post/up";
+    const postName = "/post/createpost";
     const replyName = "/reply/up";
       if (note.replyId == -1) {
         return await noteUploadWithName(note,postName);

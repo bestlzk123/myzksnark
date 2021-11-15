@@ -6,6 +6,7 @@ import 'package:myapp/utils/global_value.dart';
 import 'package:myapp/utils/note_transporter.dart';
 
 import 'entity/note.dart';
+import 'login.dart';
 
 
 class ListPage extends StatefulWidget {
@@ -47,7 +48,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
                         (BuildContext context, int index) {
                       return InkWell(
                         child:
-                        index % 2 == 0 ? getItem(index) : getItem(index),
+                        getItem(index),
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
