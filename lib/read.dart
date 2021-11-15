@@ -37,11 +37,22 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(
+            color: Colors.black
+        ),
         backgroundColor: Color.fromRGBO(244, 244, 244, 1),
-        title: Text('内容详情'),
+        title:
+        Text('内容详情',
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.black,
+          )
+        ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.edit),
+              icon: Icon(Icons.edit,
+                color: Colors.black,
+              ),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return WritePage(
@@ -127,8 +138,16 @@ class WritePageState extends State<WritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(244, 244, 244, 1),
-          title: Text("书写日记"),
+          leading: BackButton(
+              color: Colors.grey,
+          ),
+          backgroundColor: Color.fromRGBO(244, 244, 244, 1.0),
+          title: Text("书写日记",
+              style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.grey,
+              )
+          ),
           actions: <Widget>[
           ],
         ),
@@ -165,26 +184,26 @@ class WritePageState extends State<WritePage> {
                       ),
                     ),
                   )),
-              Row(
-                children: <Widget>[
-                  Container(
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.wb_sunny,
-                          color: Colors.grey,
-                        ),
-                        onPressed: () {}),
-                  ),
-                  Container(
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.star_border,
-                          color: Colors.grey,
-                        ),
-                        onPressed: () {}),
-                  ),
-                ],
-              )
+              // Row(
+              //   children: <Widget>[
+              //     Container(
+              //       child: IconButton(
+              //           icon: Icon(
+              //             Icons.wb_sunny,
+              //             color: Colors.grey,
+              //           ),
+              //           onPressed: () {}),
+              //     ),
+              //     Container(
+              //       child: IconButton(
+              //           icon: Icon(
+              //             Icons.star_border,
+              //             color: Colors.grey,
+              //           ),
+              //           onPressed: () {}),
+              //     ),
+              //   ],
+              // )
             ],
           ),
         ));
