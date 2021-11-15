@@ -7,10 +7,10 @@ class NoteDbHelper {
 
   Future open(String path) async {
     // 打开/创建数据库
-    db = await openDatabase(path, version: 3,
+    db = await openDatabase(path, version: 4,
         onCreate: (Database db, int version) async {
       await db.execute(
-          "create table notes (_id INTEGER primary key autoincrement,theme TEXT not null,text TEXT not null,time INTEGER not null,num INTEGER not null,reply_id INTEGER not null,id INTEGER not null,user_id INTEGER not null)");
+          "create table notes (_id INTEGER primary key autoincrement,theme TEXT not null,text TEXT not null,time INTEGER not null,num INTEGER not null,reply_id INTEGER not null,post_id INTEGER not null,user_id INTEGER not null)");
       print("Table is created");
     });
   }

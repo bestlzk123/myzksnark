@@ -24,7 +24,7 @@ class HomePageState extends State<HomePage> {
     Note note = Note.fromMap({
       columnTitle:"testTitle",
       columnContent:"起初　神创造天地。1:2 地是空虚混沌．渊面黑暗．神的灵运行在水面上1:3 神说、要有光、就有了光。1:4 神看光是好的、就把光暗分开了。",
-      columnTime:DateTime.now().millisecondsSinceEpoch,
+      columnTime:DateTime.now().toString(),
       columnReply:2,
       columnReplyId:0,
       columnPostId:0});

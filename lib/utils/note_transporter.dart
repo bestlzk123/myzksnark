@@ -6,7 +6,8 @@ import 'package:myapp/entity/note.dart';
 import 'global_value.dart';
 
 class NoteTransporter {
-  static String backgroundUrl = '192.168.0.108:8080';
+  static String backgroundUrl = '192.168.0.113:8080';
+  //static String backgroundUrl = '192.168.0.108:8080';
   static Future<int> noteUpload(Note note) async {
     const postName = "/post/up";
     const replyName = "/reply/up";
@@ -41,7 +42,7 @@ class NoteTransporter {
     final httpClient = HttpClient();
     // 2.构建请求的uri
     var uri = Uri.http(
-        backgroundUrl, "/post/down");
+        backgroundUrl, "/post/getAllpost");
     // 3.构建请求
     HttpClientRequest request = await httpClient.postUrl(uri);
     request.headers.set("content-type", "application/json");
@@ -50,7 +51,7 @@ class NoteTransporter {
       String responseString = await response.transform(utf8.decoder).join();
       Map<String, dynamic> map = json.decode(responseString);
       DbUtil.noteDbHelper.delete();
-      for(var i in map['post_note']) {
+      for(var i in map['post_list']) {
         Note s = Note.fromMap(Map<String, dynamic>.from(i));
         DbUtil.noteDbHelper.insert(s);
       }

@@ -4,7 +4,7 @@ const String columnTitle = 'theme'; // 属性名 theme
 const String columnContent = 'text'; // 属性名 text
 const String columnTime = "time"; //属性名 edit_time
 const String columnReply = "num"; //属性名 num
-const String columnPostId = "id"; //属性名 id
+const String columnPostId = "post_id"; //属性名 id
 const String columnReplyId = "reply_id";//属性名
 const String columnUserId = "user_id"; //属性名
 // 实体类
@@ -12,7 +12,7 @@ class Note {
   int id = 0; //本地使用id
   String title = "";
   String content = "";
-  int time = 0;
+  String time = DateTime(1970).toString();
   int reply = 0;
   int replyId = 0; // 帖子作为回帖的id，当为主题帖时，replyid = 1
   int postId = 0; // 帖子的父节点id
@@ -38,9 +38,9 @@ class Note {
     //id = map[columnId];
     title = map[columnTitle];
     content = map[columnContent];
-    time = map[columnTime];
+    time = map[columnTime]?? DateTime(1970).toString();
     reply = map[columnReply];
-    replyId = map[columnReplyId];
+    replyId = map[columnReplyId]?? 0;
     postId = map[columnPostId] ?? 0;
     userId = map[columnUserId]?? 0;
   }

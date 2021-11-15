@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/read.dart';
 import 'package:myapp/utils/global_value.dart';
+import 'package:myapp/utils/note_transporter.dart';
 
 import 'entity/note.dart';
 
@@ -74,8 +75,8 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
 
   //刷新
   Future<void> _onRefresh() async {
-    await Future.delayed(const Duration(seconds: 1), () {
-
+    await Future.delayed(const Duration(seconds: 1), () async {
+      await NoteTransporter.postNoteReload();
       print('refresh');
       DbUtil.noteDbHelper.getDatabase().then((database) {
         database
