@@ -1,7 +1,7 @@
 const String columnTeacherId = 'teacher_id'; // 表名
 const String columnTeacherName = 'teacher_name'; // 属性名 theme
-const String columnCourseId = 'course_id'; // 属性名 text
-const String columnIndex = "index"; //属性名 edit_time
+const String columnCourseId = "course_id"; // 属性名 text
+const String columnIndex = "cindex"; //属性名 edit_time
 const String columnCourseName = "course_name"; //属性名 num
 const String columnRoomId = "room_id"; //属性名 id
 const String columnRoomName = "room_name";//属性名
@@ -33,7 +33,7 @@ class Course {
     teacherId = map[columnTeacherId];
     teacherName = map[columnTeacherName];
     courseId = map[columnCourseId];
-    index = map[columnIndex] ;
+    index = map[columnIndex] ?? 0;
     courseName = map[columnCourseName];
     roomId = map[columnRoomId];
     roomName = map[columnRoomName] ;
