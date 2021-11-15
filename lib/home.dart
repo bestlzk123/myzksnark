@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/syllabus_home.dart';
 import 'package:myapp/utils/global_value.dart';
+import 'package:myapp/write.dart';
 
 import 'entity/note.dart';
 import 'forum_list.dart';
@@ -53,7 +54,7 @@ class HomePageState extends State<HomePage> {
         return Scaffold(
           body: IndexedStack(
               index: _currentIndex,
-              children: [ListPage(), SyllabusHome()]),
+              children: [ListPage(), SyllabusHome(), WritePage()]),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,
             selectedFontSize: 14,
@@ -72,6 +73,11 @@ class HomePageState extends State<HomePage> {
               backgroundColor: Colors.green,
               icon: Icon(Icons.message),
               title: Text("2"),
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Colors.green,
+              icon: Icon(Icons.control_point),
+              title: Text("3"),
             ),]
           ),
         );
