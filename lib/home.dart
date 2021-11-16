@@ -67,17 +67,17 @@ class HomePageState extends State<HomePage> {
               BottomNavigationBarItem(
             backgroundColor: Colors.blue,
             icon: Icon(Icons.home),
-            title: Text("1"),
+            title: Text("看贴"),
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.green,
               icon: Icon(Icons.message),
-              title: Text("2"),
+              title: Text("课表"),
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.green,
               icon: Icon(Icons.control_point),
-              title: Text("3"),
+              title: Text("发帖"),
             ),]
           ),
         );
