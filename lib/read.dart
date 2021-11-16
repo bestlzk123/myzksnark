@@ -65,7 +65,6 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
         ],
       ),
       body: Container(
-        width: double.infinity,
         child: CustomScrollView(
           shrinkWrap: false,
           primary: false,
@@ -138,11 +137,14 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
                         child: Column(
 
                           children: <Widget>[
-
-                            Text(
+                            Container(
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              width: double.infinity,
+                              child:Text(
                                 pN.replyNotes[index].content,
-                                textAlign: TextAlign.left,
-                            ),
+                                style: TextStyle(fontSize: 16),
+                            ) ,)
+                            ,
                             Divider(height:10.0,indent:0.0,color: Colors.black,),
                           ]
                         ),
