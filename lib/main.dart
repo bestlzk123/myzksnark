@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 
-bool debugFlag = false;
+bool debugFlag = true;
 void main() {
   realRunApp();
 }

@@ -77,7 +77,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
   //刷新
   Future<void> _onRefresh() async {
     await Future.delayed(const Duration(seconds: 1), () async {
-      await NoteTransporter.postNoteReload();
+      //await NoteTransporter.postNoteReload();
       print('refresh');
       DbUtil.noteDbHelper.getDatabase().then((database) {
         database
