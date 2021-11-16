@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/entity/post_notes.dart';
 import 'package:myapp/utils/global_value.dart';
+import 'package:myapp/utils/note_transporter.dart';
 import 'entity/note.dart';
 
 class ReadPage extends StatefulWidget {
@@ -21,18 +22,21 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
   String title = "";
   late Note noteEntity;
   late PostNotes pN;
+
   @override
   void initState() {
-    print(widget.id);
+    print('widget.id:' + widget.id.toString());
     super.initState();
+    pN = PostNotes();
     //WidgetsBinding.instance.addObserver(this);
     DbUtil.noteDbHelper.getNoteById(widget.id).then((notes) {
-      setState(() {
-        note = notes!.content;
+      pN.postNote = notes!;
+      pN.inital().then((k){setState(() {
+        note = notes.content;
         noteEntity = notes;
-        pN = PostNotes(noteEntity);
         title = notes.title;
-      });
+      }
+      );});
     });
   }
 
@@ -55,12 +59,13 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
               ),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return WritePage(id: widget.id);
+                  return WritePage(id: widget.id,post_id:noteEntity.postId);
                 }));
               })
         ],
       ),
       body: Container(
+        width: double.infinity,
         child: CustomScrollView(
           shrinkWrap: false,
           primary: false,
@@ -101,21 +106,68 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
                 ),
               ),
             ),
+
             SliverToBoxAdapter(
               child: Container(
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  // color: Colors.lightBlueAccent,
                   child: MaterialButton(
-                      child: Text(
-                        '点此处或者右上角输入您的回复~',
-                        textAlign: TextAlign.right,
-                      ),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            '点此处或者右上角输入您的回复~',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.blueAccent,
+                            ),
+                          ),
+                        ]),
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return WritePage(id: widget.id);
+                          return WritePage(id: widget.id,post_id: noteEntity.postId,);
                         }));
                       })),
             ),
+            SliverList(
+                delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                      return InkWell(
+
+                        child: Column(
+
+                          children: <Widget>[
+
+                            Text(
+                                pN.replyNotes[index].content,
+                                textAlign: TextAlign.left,
+                            ),
+                            Divider(height:10.0,indent:0.0,color: Colors.black,),
+                          ]
+                        ),
+                      );},
+                    childCount: pN.replyNotes.length)),
+            // Row(
+            //   children: <Widget>[
+            //     Container(
+            //       child: IconButton(
+            //           icon: Icon(
+            //             Icons.wb_sunny,
+            //             color: Colors.grey,
+            //           ),
+            //           onPressed: () {}),
+            //     ),
+            //     Container(
+            //       child: IconButton(
+            //           icon: Icon(
+            //             Icons.star_border,
+            //             color: Colors.grey,
+            //           ),
+            //           onPressed: () {}),
+            //     ),
+            //   ],
+            // )
           ],
         ),
       ),
@@ -132,10 +184,11 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
 
 class WritePage extends StatefulWidget {
   const WritePage({
+    required this.post_id,
     required this.id,
   });
   final int id;
-  @override
+  final int post_id;
   State<StatefulWidget> createState() {
     return WritePageState();
   }
@@ -143,6 +196,7 @@ class WritePage extends StatefulWidget {
 
 class WritePageState extends State<WritePage> {
   String notes = "";
+  int replyId = 3;
 
   @override
   void initState() {
@@ -168,11 +222,21 @@ class WritePageState extends State<WritePage> {
                   '发布回复',
                   textAlign: TextAlign.right,
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  print("notes是什么？： "+ notes);
+                  Note reply = Note.fromMap({
+                    columnTitle:"youshouldnotseeit",
+                    columnContent:notes,
+                    columnTime:DateTime.now().toString(),
+                    columnReply:0,//should not use
+                    columnReplyId:10,
+                    columnPostId:widget.post_id,
+                  });
+                  await NoteTransporter.noteUpload(reply);
                   Navigator.pop(context);
                   Navigator.pop(context);
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return mockLoadReply();
+                    return ReadPage(id:widget.id);
                   }));
                 })
           ],
@@ -189,25 +253,25 @@ class WritePageState extends State<WritePage> {
                 ),
                 padding: EdgeInsets.only(
                     left: 16.0, right: 16.0, top: 8.0, bottom: 4.0),
-                child: TextField(
-                  controller: TextEditingController.fromValue(TextEditingValue(
-                      // 设置内容
-                      text: notes,
-                      // 保持光标在最后
-                      selection: TextSelection.fromPosition(TextPosition(
-                          affinity: TextAffinity.downstream,
-                          offset: notes.length)))),
-                  onChanged: (text) {
-                    setState(() {
-                      notes = text;
-                    });
-                  },
-                  maxLines: null,
-                  style: TextStyle(),
-                  keyboardType: TextInputType.multiline,
-                  decoration: InputDecoration.collapsed(
-                    hintText: "点此输入你的回复……",
-                  ),
+                    child: TextField(
+                      controller: TextEditingController.fromValue(TextEditingValue(
+                          // 设置内容
+                          text: notes,
+                          // 保持光标在最后
+                          selection: TextSelection.fromPosition(TextPosition(
+                              affinity: TextAffinity.downstream,
+                              offset: notes.length)))),
+                      onChanged: (text) {
+                        setState(() {
+                          notes = text;
+                        });
+                      },
+                      maxLines: null,
+                      style: TextStyle(),
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration.collapsed(
+                        hintText: "请输入您的回复……",
+                      ),
                 ),
               )),
             ],
@@ -219,63 +283,6 @@ class WritePageState extends State<WritePage> {
   void dispose() {
     super.dispose();
   }
-
-  Widget mockLoadReply() {
-    return Scaffold(
-      body : new Container(
-        child: RefreshIndicator(
-          onRefresh: _onRefresh,
-            child: CustomScrollView(
-              shrinkWrap: false,
-              primary: false,
-              // 回弹效果
-              slivers: <Widget>[
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 10,
-                  ),
-                ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return InkWell(
-                            child: Text(
-                                '发布回复',
-                              textAlign: TextAlign.right,),
-                              );}
-                        ),
-                  ),
-              ],
-            ),
-        ),
-      ),);
-}
-
-// Widget _buildReply() {
-//   return new Padding(
-//     padding: const EdgeInsets.only(left: 35.0, bottom: 12.0),
-//     child: new Container(
-//       alignment: Alignment.topLeft,
-//       child: new Text.rich(
-//         new TextSpan(
-//             text: '??????????',
-//             style: new TextStyle(
-//                 fontSize: 16.0,
-//                 color: Colors.black,
-//                 fontWeight: FontWeight.w400),
-//             children: [
-//               new TextSpan(
-//                   text: '?????????',
-//                   style: new TextStyle(
-//                     fontSize: 14.0,
-//                     color: Colors.grey[600],
-//                     fontWeight: FontWeight.w400,
-//                   ))
-//             ]),
-//       ),
-//     ),
-//   );
-// }
 
 
   Future<void> _onRefresh() async {

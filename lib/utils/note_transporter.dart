@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:myapp/entity/note.dart';
 
+import '../main.dart';
 import 'global_value.dart';
 
 class NoteTransporter {
@@ -10,8 +11,12 @@ class NoteTransporter {
   //static String backgroundUrl = '192.168.0.108:8080';
   static Future<int> noteUpload(Note note) async {
     const postName = "/post/createpost";
-    const replyName = "/reply/up";
-      if (note.replyId == -1) {
+    const replyName = "/reply/createpost";
+      if(debugFlag) {
+        print('note:' + note.toString());
+        return 0;
+      }
+      if (note.replyId == 1) {
         return await noteUploadWithName(note,postName);
       } else {
         return await noteUploadWithName(note,replyName);
@@ -91,17 +96,18 @@ class NoteTransporter {
     final httpClient = HttpClient();
     // 2.构建请求的uri
     var uri = Uri.http(
-        backgroundUrl, "/reply/down");
+        backgroundUrl, "/reply/getByPostid");
     // 3.构建请求
     HttpClientRequest request = await httpClient.postUrl(uri);
     request.headers.set("content-type", "application/json");
     Map jsonMap = {"post_id":note.postId};
     request.add(utf8.encode(json.encode(jsonMap)));
     final response = await request.close();
+    print("read finish");
     if (response.statusCode == HttpStatus.ok) {
       String responseString = await response.transform(utf8.decoder).join();
       Map<String, dynamic> map = json.decode(responseString);
-      for (var i in map['post_note']) {
+      for (var i in map['reply_list']) {
         Note s = Note.fromMap(Map<String, dynamic>.from(i));
         list.add(s);
       }
