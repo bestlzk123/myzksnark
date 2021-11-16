@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/entity/post_notes.dart';
 import 'package:myapp/utils/global_value.dart';
 import 'entity/note.dart';
 
@@ -19,6 +20,7 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
   String note = "";
   String title = "";
   late Note noteEntity;
+  late PostNotes pN;
   @override
   void initState() {
     print(widget.id);
@@ -28,6 +30,7 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
     setState(() {
         note = notes!.content;
         noteEntity = notes;
+        pN = PostNotes(noteEntity);
         title = notes.title;
       });
     });
@@ -55,9 +58,7 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
               ),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return WritePage(
-
-                  );
+                  return WritePage(id:widget.id);
                 }));
               })
         ],
@@ -104,6 +105,21 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
                 ),
               ),
             ),
+            SliverToBoxAdapter(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                child: MaterialButton(
+                    child: Text(
+                        '点此处或者右上角输入您的回复~',
+                        textAlign: TextAlign.right,
+                    ),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return WritePage(id:widget.id);
+                      }));
+                    })
+              ),
+            ),
           ],
         ),
       ),
@@ -118,7 +134,13 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
   }
 }
 
+
+
 class WritePage extends StatefulWidget{
+  const WritePage({
+    required this.id,
+  });
+  final int id;
   @override
   State<StatefulWidget> createState() {
     return WritePageState();
@@ -128,6 +150,7 @@ class WritePage extends StatefulWidget{
 
 class WritePageState extends State<WritePage> {
   String notes = "";
+
 
   @override
   void initState() {
@@ -142,13 +165,25 @@ class WritePageState extends State<WritePage> {
               color: Colors.grey,
           ),
           backgroundColor: Color.fromRGBO(244, 244, 244, 1.0),
-          title: Text("书写日记",
+          title: Text("回复帖子",
               style: TextStyle(
                 fontSize: 20.0,
                 color: Colors.grey,
               )
           ),
           actions: <Widget>[
+            MaterialButton(
+                child: Text(
+                  '发布回复',
+                  textAlign: TextAlign.right,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ReadPage(id:widget.id);
+                  }));
+                })
           ],
         ),
         body: Container(
@@ -171,39 +206,20 @@ class WritePageState extends State<WritePage> {
                           selection: TextSelection.fromPosition(TextPosition(
                               affinity: TextAffinity.downstream,
                               offset: notes.length)))),
-                      onChanged: (text) {
-                        setState(() {
-                          notes = text;
-                        });
-                      },
+                          onChanged: (text) {
+                            setState(() {
+                              notes = text;
+                            });
+                          },
                       maxLines: null,
                       style: TextStyle(),
                       keyboardType: TextInputType.multiline,
                       decoration: InputDecoration.collapsed(
-                        hintText: "点此输入你的内容",
+                        hintText: "点此输入你的回复……",
                       ),
                     ),
-                  )),
-              // Row(
-              //   children: <Widget>[
-              //     Container(
-              //       child: IconButton(
-              //           icon: Icon(
-              //             Icons.wb_sunny,
-              //             color: Colors.grey,
-              //           ),
-              //           onPressed: () {}),
-              //     ),
-              //     Container(
-              //       child: IconButton(
-              //           icon: Icon(
-              //             Icons.star_border,
-              //             color: Colors.grey,
-              //           ),
-              //           onPressed: () {}),
-              //     ),
-              //   ],
-              // )
+                  )
+              ),
             ],
           ),
         ));
