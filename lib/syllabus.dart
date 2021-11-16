@@ -60,11 +60,45 @@ class ClassInDetail extends State<ClassDetail> with WidgetsBindingObserver {
             ),
             Container(
                 child: Text(
-              course.courseName,
+              "课程 " + course.courseName,
               style: TextStyle(color: Colors.black, fontSize: 18),
             )),
           ],
-        )
+        ),
+        Row(
+          children: <Widget>[
+            Container(
+              child: IconButton(
+                  icon: Icon(
+                    Icons.business,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {}),
+            ),
+            Container(
+                child: Text(
+              "教师 " + course.roomName,
+              style: TextStyle(color: Colors.black, fontSize: 18),
+            )),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Container(
+              child: IconButton(
+                  icon: Icon(
+                    Icons.person,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {}),
+            ),
+            Container(
+                child: Text(
+              "老师 " + course.teacherName,
+              style: TextStyle(color: Colors.black, fontSize: 18),
+            )),
+          ],
+        ),
       ])),
     );
   }
