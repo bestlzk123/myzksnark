@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/utils/course_db_helper.dart';
+import 'package:myapp/utils/global_value.dart';
 import 'login.dart';
+import 'entity/course.dart';
 
 class Class {
   String title;
@@ -9,26 +12,94 @@ class Class {
   Class(this.title, this.description);
 }
 
-class ClassDetail extends StatelessWidget {
-  var _classindex = 0;
+class ClassDetail extends StatefulWidget {
+  const ClassDetail(
+    this.index,
+  );
+  final int index;
+  @override
+  State<StatefulWidget> createState() {
+    return ClassInDetail();
+  }
+}
+
+class ClassInDetail extends State<ClassDetail> with WidgetsBindingObserver {
   Class classinfo = Class("高等数学", "周某某教授@综合楼201");
-  ClassDetail(this._classindex);
+  late Course course;
 
   @override
   void initState() {
-    classinfo.description = _classindex.toString();
+    classinfo.description = widget.index.toString();
+    print(widget.index);
+    super.initState();
+    //WidgetsBinding.instance.addObserver(this);
+    DbUtil.courseDbHelper.getNoteByIndex(widget.index).then((notes) {
+      setState(() {
+        course = notes!;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    initState();
     return Scaffold(
       appBar: AppBar(
-        title: Text('${classinfo.title}'),
+        title: Text('课程详情'),
       ),
-      body: Center(
-        child: Text('${classinfo.description}'),
-      ),
+      body: Container(
+          child: Column(children: <Widget>[
+        Row(
+          children: <Widget>[
+            Container(
+              child: IconButton(
+                  icon: Icon(
+                    Icons.wb_sunny,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {}),
+            ),
+            Container(
+                child: Text(
+              "课程 " + course.courseName,
+              style: TextStyle(color: Colors.black, fontSize: 18),
+            )),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Container(
+              child: IconButton(
+                  icon: Icon(
+                    Icons.business,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {}),
+            ),
+            Container(
+                child: Text(
+              "教师 " + course.roomName,
+              style: TextStyle(color: Colors.black, fontSize: 18),
+            )),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Container(
+              child: IconButton(
+                  icon: Icon(
+                    Icons.person,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {}),
+            ),
+            Container(
+                child: Text(
+              "老师 " + course.teacherName,
+              style: TextStyle(color: Colors.black, fontSize: 18),
+            )),
+          ],
+        ),
+      ])),
     );
   }
 }

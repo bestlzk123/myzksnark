@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'entity/course.dart';
 import 'syllabus.dart';
 import 'utils/global_value.dart';
 
@@ -8,7 +9,7 @@ class httpRequest {
   static Future<void> requestNetwork(String stdNumber,String password) async {
     // 1.创建HttpClient对象
     final httpClient = HttpClient();
-    const backgroundUrl = '192.168.0.108:8080';
+    const backgroundUrl = '192.168.0.113:8080';
     // 2.构建请求的uri
     var uri = Uri.http(
       backgroundUrl, '/timeTable',);
@@ -29,12 +30,14 @@ class httpRequest {
       Map<String, dynamic> map = json.decode(responseString);
       // print('看这里maptimeInfo: ${map['timeInfo']}');
       // print('看这里courseList: ${map['courseList']}');
+      print(map);
       List classindex = [];
       for(var i in map['courseList']){
         var s = Map<String, dynamic>.from(i);
+        DbUtil.courseDbHelper.insert(Course.fromMap(s));
+        print(DbUtil.courseDbHelper.getNoteByIndex(1));
         print(s);
-        Pattern r;
-        classindex.add("\""+s["coursename"].replaceAll(RegExp('\\(.*\\)'), '') + "@" + s["roomname"]+"\"");
+        classindex.add("\""+s["course_name"].replaceAll(RegExp('\\(.*\\)'), '') + "@" + s["room_name"]+"\"");
         // print("????快来"+s["coursename"].replaceAll(RegExp('\\(.*\\)'), ''));
       }
       SpUtil.preferences.setString('timeInfo',map['timeInfo'].toString());
