@@ -36,10 +36,10 @@ class Note {
   // 通过数据集合返回一个实体对象
   Note.fromMap(Map<String, dynamic> map) {
     id = map[columnId] ?? 0;
-    title = map[columnTitle];
+    title = map[columnTitle] ?? "";
     content = map[columnContent];
     time = map[columnTime] ?? DateTime(1970).toString();
-    reply = map[columnReply];
+    reply = map[columnReply] ?? 0;
     replyId = map[columnReplyId]?? 0;
     postId = map[columnPostId] ?? 0;
     userId = map[columnUserId]?? 0;

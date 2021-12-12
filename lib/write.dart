@@ -162,19 +162,19 @@ class WritePageState extends State<WritePage> {
     note.reply = 0;
     note.replyId = 1; // 帖子作为回帖的id，当为主题帖时，replyid = 1
 
-    if (widget.id != -1) {
       //note.id = widget.id;
       //widget.noteDbHelpter.update(note);
-      print("ssssss");
-      await NoteTransporter.noteUpload(note);
-    } else {
-      //widget.noteDbHelpter.insert(note);
-      // 发送事件、数据
-      //eventBus.fire(NoteEvent(widget.id));
-    }
+    print("ssssss");
+    await NoteTransporter.noteUpload(note);
+
     //Navigator.pop(context);
     titles = "";
     contents = "";
+    await showDialog(context: context, builder: (ctx) {return const SimpleDialog(
+      title: Text("/*经验+3*/"),
+      titlePadding: EdgeInsets.all(10),
+    );}
+    );
   }
 
   @override
