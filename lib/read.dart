@@ -18,7 +18,7 @@ class ReadPage extends StatefulWidget {
 class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
   String note = "";
   String title = "";
-  late Note noteEntity;
+  int user_id = 0;
   @override
   void initState() {
     print(widget.id);
@@ -27,8 +27,8 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
     DbUtil.noteDbHelper.getNoteById(widget.id).then((notes) {
     setState(() {
         note = notes!.content;
-        noteEntity = notes;
         title = notes.title;
+        user_id = notes.userId;
       });
     });
   }
@@ -86,9 +86,11 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
                       children: <Widget>[
                         Text(
                           title,
+                          softWrap:true,
                           style: TextStyle(
                               fontSize: 25),
                         ),
+                        Text(user_id.toString()),
                       ],
                     ),
                   ),
