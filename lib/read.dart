@@ -4,6 +4,7 @@ import 'package:myapp/entity/post_notes.dart';
 import 'package:myapp/utils/global_value.dart';
 import 'package:myapp/utils/note_transporter.dart';
 import 'entity/note.dart';
+import 'entity/user.dart';
 
 class ReadPage extends StatefulWidget {
   const ReadPage({
@@ -96,6 +97,10 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
                 ],
               ),
             ),
+            SliverToBoxAdapter(child:Container(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: getUserWindow(User.fromMap({"user_id":pN.postNote.userId,"user_name":""})),
+            )),
             SliverToBoxAdapter(
               child: Container(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -175,7 +180,9 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
       ),
     );
   }
-
+  Widget getUserWindow(User user) {
+    return Text(user.userName+"[#"+user.userId.toString()+"]");
+  }
   //组件即将销毁时调用
   @override
   void dispose() {
@@ -286,16 +293,5 @@ class WritePageState extends State<WritePage> {
     super.dispose();
   }
 
-
-  Future<void> _onRefresh() async {
-    await Future.delayed(const Duration(seconds: 1), () async {
-      //await NoteTransporter.postNoteReload();
-      print('refresh');
-      DbUtil.noteDbHelper.getDatabase().then((database) {
-        database
-            .query('notes', orderBy: 'time DESC')
-            .then((List<Map<String, dynamic>> records) {});
-      });
-    });
-  }
 }
+

@@ -7,6 +7,7 @@ const String columnReply = "num"; //属性名 num
 const String columnPostId = "post_id"; //属性名 id
 const String columnReplyId = "reply_id";//属性名
 const String columnUserId = "user_id"; //属性名
+const String columnUserName = "user_name";
 // 实体类
 class Note {
   int id = 0; //本地使用id
@@ -17,6 +18,7 @@ class Note {
   int replyId = 0; // 帖子作为回帖的id，当为主题帖时，replyid = 1
   int postId = 0; // 帖子的父节点id
   int userId = 0 ;// 发帖人id
+  String userName = "";
   // 将实体对象类转为数据集合
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -27,6 +29,7 @@ class Note {
       columnReplyId:replyId,
       columnPostId:postId,
       columnUserId:userId,
+      columnUserName:userName
     };
     //map[columnId] = id;
     return map;
@@ -43,5 +46,6 @@ class Note {
     replyId = map[columnReplyId]?? 0;
     postId = map[columnPostId] ?? 0;
     userId = map[columnUserId]?? 0;
+    userName = map[columnUserName] ?? "";
   }
 }
