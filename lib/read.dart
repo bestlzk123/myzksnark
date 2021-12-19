@@ -22,13 +22,12 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
   String note = "";
   String title = "";
   late Note noteEntity;
-  late PostNotes pN;
+  PostNotes pN = PostNotes();
 
   @override
   void initState() {
     print('widget.id:' + widget.id.toString());
     super.initState();
-    pN = PostNotes();
     //WidgetsBinding.instance.addObserver(this);
     DbUtil.noteDbHelper.getNoteById(widget.id).then((notes) {
       pN.postNote = notes!;
@@ -97,10 +96,9 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
                 ],
               ),
             ),
-            SliverToBoxAdapter(child:Container(
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: getUserWindow(User.fromMap({"user_id":pN.postNote.userId,"user_name":""})),
-            )),
+            SliverToBoxAdapter(child:
+              getUserWindow(User.fromMap({"user_id":pN.postNote.userId,"user_name":pN.postNote.userName})),
+            ),
             SliverToBoxAdapter(
               child: Container(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -142,6 +140,9 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
                         child: Column(
 
                           children: <Widget>[
+                            getUserWindow(
+                                User.fromMap({"user_id":pN.replyNotes[index].userId,
+                                  "user_name":pN.replyNotes[index].userName})),
                             Container(
                               padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                               width: double.infinity,
@@ -152,6 +153,7 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
                             ,
                             Divider(height:10.0,indent:0.0,color: Colors.black,),
                           ]
+                              ,crossAxisAlignment: CrossAxisAlignment.start
                         ),
                       );},
                     childCount: pN.replyNotes.length)),
@@ -181,7 +183,12 @@ class ReadPageState extends State<ReadPage> with WidgetsBindingObserver {
     );
   }
   Widget getUserWindow(User user) {
-    return Text(user.userName+"[#"+user.userId.toString()+"]");
+    return Container(
+    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+    child: Text(user.userName+"[#"+user.userId.toString()+"]",textAlign: TextAlign.left),
+
+  )
+    ;
   }
   //组件即将销毁时调用
   @override

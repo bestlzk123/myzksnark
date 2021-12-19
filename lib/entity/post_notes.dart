@@ -4,7 +4,7 @@ import 'note.dart';
 import 'package:myapp/utils/note_transporter.dart';
 
 class PostNotes {
-  late Note postNote;
+  Note postNote = Note();
   List<Note> replyNotes = List.empty();
   PostNotes();
   Future<int> inital() async{

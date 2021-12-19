@@ -34,8 +34,9 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
           child: CustomScrollView(
             shrinkWrap: false,
             primary: false,
+            physics:  new AlwaysScrollableScrollPhysics(),
             // 回弹效果
-            physics: BouncingScrollPhysics(),
+            //physics: BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
             controller: _scrollController,
             slivers: <Widget>[
@@ -82,8 +83,8 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
         print(_noteList.length);
       });
       return;
-    };
-    await Future.delayed(const Duration(seconds: 1), () async {
+    }
+
       await NoteTransporter.postNoteReload();
       print('refresh');
       DbUtil.noteDbHelper.getDatabase().then((database) {
@@ -100,7 +101,7 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
           });
         });
       });
-    });
+
   }
 
   Widget getItem(int index) {
@@ -118,14 +119,18 @@ class ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin {
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
                   child: Row(
                     children: <Widget>[
-                      Text(
+                  Container(
+                      constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width - 100),
+                      child:Text(
                         _noteList.elementAt(index).title,
+                        overflow:TextOverflow.ellipsis,
                         //'${DateTime.fromMillisecondsSinceEpoch(_noteList.elementAt(index).time).day}',
                         style: TextStyle(
                             color: Color.fromRGBO(52, 52, 54, 1),
                             fontSize: 50,
                             fontWeight: FontWeight.normal),
-                      ),
+                      )),
                     ],
                   ),
                 ),
