@@ -6,7 +6,7 @@ import 'syllabus.dart';
 import 'utils/global_value.dart';
 
 class httpRequest {
-  static Future<void> requestNetwork(String stdNumber,String password) async {
+  static Future<void> login(String stdNumber,String password) async {
     // 1.创建HttpClient对象
     final httpClient = HttpClient();
     const backgroundUrl = '192.168.0.113:8080';
@@ -41,6 +41,10 @@ class httpRequest {
         // print("????快来"+s["coursename"].replaceAll(RegExp('\\(.*\\)'), ''));
       }
       SpUtil.preferences.setString('timeInfo',map['timeInfo'].toString());
+      SpUtil.preferences.setString("stdNumber", map['school_no']);
+      SpUtil.preferences.setString("userName", map['username']);
+      SpUtil.preferences.setString("userId", map['id']);
+
       // print("hhhhhhhhhhhhh"+SpUtil.preferences.getString('timeInfo').toString());
       SpUtil.preferences.setString('classindex',classindex.toString());
     } else {
@@ -128,7 +132,7 @@ class _Login extends State<Login> {
     if(loginForm!.validate()){
       loginForm.save();
       print('userName: ' + userName + ' password: ' + password);
-      await httpRequest.requestNetwork(userName,password);
+      await httpRequest.login(userName,password);
       Navigator.push(context, MaterialPageRoute(builder: (context)=>SyllabusPage()));
     }
   }
