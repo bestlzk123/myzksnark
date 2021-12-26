@@ -41,9 +41,9 @@ class httpRequest {
         // print("????快来"+s["coursename"].replaceAll(RegExp('\\(.*\\)'), ''));
       }
       SpUtil.preferences.setString('timeInfo',map['timeInfo'].toString());
-      SpUtil.preferences.setString("stdNumber", map['school_no']);
-      SpUtil.preferences.setString("userName", map['username']);
-      SpUtil.preferences.setString("userId", map['id']);
+      SpUtil.preferences.setString("stdNumber", map['school_no']); // 17307110054
+      SpUtil.preferences.setString("userName", map['username']); // 17307110054
+      SpUtil.preferences.setString("userId", map['id']); // 5
 
       // print("hhhhhhhhhhhhh"+SpUtil.preferences.getString('timeInfo').toString());
       SpUtil.preferences.setString('classindex',classindex.toString());
