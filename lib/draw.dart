@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/utils/global_value.dart';
 
 class myDrawerState extends StatefulWidget {
   const myDrawerState({
     required this.id,
   });
   final int id;
-
   @override
   State<StatefulWidget> createState() {
     return myDrawer();
@@ -13,6 +13,18 @@ class myDrawerState extends StatefulWidget {
 }
 
 class myDrawer extends State<myDrawerState> with WidgetsBindingObserver {
+  int userid=1;
+  String username="";
+  String stdnumber="";
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      this.userid = SpUtil.preferences.getInt("userId")!;
+      this.username = SpUtil.preferences.getString("userName")!;
+      this.stdnumber = SpUtil.preferences.getString("stdNumber")!;
+    });
+  }
 
 
   @override
@@ -22,8 +34,9 @@ class myDrawer extends State<myDrawerState> with WidgetsBindingObserver {
         children: <Widget>[
 //设置 用户信息 用户名 头像
           UserAccountsDrawerHeader(
-            accountName: new Text(widget.id.toString()),
-            accountEmail: new Text("nigulasi@email.com"),
+            accountName: new Text("ID号："+this.userid.toString()+"    学号："+this.stdnumber),
+            accountEmail: new Text("昵称："+this.username,style: new TextStyle(
+    fontSize: 16.0,),),
 //当前头像
             currentAccountPicture: new CircleAvatar(
               backgroundImage: new  AssetImage("images/1.jpeg"),
@@ -32,7 +45,7 @@ class myDrawer extends State<myDrawerState> with WidgetsBindingObserver {
 //其他账号头像
             otherAccountsPictures: <Widget>[
               new Container(
-                child: Image.asset("images/like.jpg"),
+                child: Image.asset("images/FKDicon.png"),
               )
             ],
           ),
@@ -50,14 +63,13 @@ class myDrawer extends State<myDrawerState> with WidgetsBindingObserver {
           ),
           ListTile(
             leading: new CircleAvatar(
-              child: new Icon(Icons.wifi),
+              child: new Icon(Icons.account_circle),
             ),
-            title: new Text("wifi"),
+            title: new Text("信息修改"),
           )
         ],
       ),
     );
-
-
+    
   }
 }
