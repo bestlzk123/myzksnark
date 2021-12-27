@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+
+import 'initialize.dart';
 
 bool debugFlag = false;
 void main() {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData(
       //   primarySwatch: Colors.blue,
       // ),
-      home: HomePage(),
+      home: InitialPage(),
     );
   }
 }

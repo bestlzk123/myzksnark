@@ -32,9 +32,9 @@ class HomePageState extends State<HomePage> {
     await DbUtil.noteDbHelper.insert(note);
   }
   Future<String> _gerData() async {
-    await SpUtil.getInstance();
-    await DbUtil.getInstance();
-    if (debugFlag) debugMode();
+    //await SpUtil.getInstance();
+    //await DbUtil.getInstance();
+    //if (debugFlag) debugMode();
     return "ok";
   }
   @override

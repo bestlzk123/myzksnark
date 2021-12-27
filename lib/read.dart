@@ -247,6 +247,8 @@ class WritePageState extends State<WritePage> {
                     columnReply:0,//should not use
                     columnReplyId:10,
                     columnPostId:widget.post_id,
+                    //columnUserName: SpUtil.preferences.getString("username"),
+                    columnUserId : SpUtil.preferences.getInt("userId")
                   });
                   await NoteTransporter.noteUpload(reply);
                   Navigator.pop(context);

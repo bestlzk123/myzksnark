@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '/entity/note.dart';
 import '/utils/note_transporter.dart';
+import 'utils/global_value.dart';
 
 class WritePage extends StatefulWidget {
   /*
@@ -158,7 +159,7 @@ class WritePageState extends State<WritePage> {
     Note note = Note();
     note.title = titles;
     note.content = contents;
-    note.userId = 0; // 发帖人id
+    note.userId = int.parse(SpUtil.preferences.getString("userId")!); // 发帖人id
     note.reply = 0;
     note.replyId = 1; // 帖子作为回帖的id，当为主题帖时，replyid = 1
 

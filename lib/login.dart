@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:myapp/home.dart';
 import 'entity/course.dart';
 import 'syllabus.dart';
 import 'utils/global_value.dart';
@@ -43,7 +44,7 @@ class httpRequest {
       SpUtil.preferences.setString('timeInfo',map['timeInfo'].toString());
       SpUtil.preferences.setString("stdNumber", map['school_no']); // 17307110054
       SpUtil.preferences.setString("userName", map['username']); // 17307110054
-      SpUtil.preferences.setString("userId", map['id']); // 5
+      SpUtil.preferences.setInt("userId", map['id']); // 5
 
       // print("hhhhhhhhhhhhh"+SpUtil.preferences.getString('timeInfo').toString());
       SpUtil.preferences.setString('classindex',classindex.toString());
@@ -56,20 +57,6 @@ class httpRequest {
 class Login extends StatefulWidget {
   @override
   _Login createState() => new _Login();
-}
-
-class CustomWidgetPage extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("组件封装"),
-      centerTitle: true,),body: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        MyRaisedButton(new SyllabusPage(), "课程表View")
-      ],
-    ),);
-  }
 }
 
 class SyllabusPage extends StatefulWidget {
@@ -133,7 +120,7 @@ class _Login extends State<Login> {
       loginForm.save();
       print('userName: ' + userName + ' password: ' + password);
       await httpRequest.login(userName,password);
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>SyllabusPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
     }
   }
 

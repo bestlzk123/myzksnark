@@ -8,11 +8,12 @@ class SyllabusHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (SpUtil.preferences.getString('timeInfo') != null || debugFlag) {
-      return SyllabusPage();
-    } else {
-      return Login();
-    }
+    //if (SpUtil.preferences.getString('timeInfo') != null || debugFlag) {
+    return SyllabusPage();
+  }
+    // } else {
+    //   return Login();
+    // }
     // return Scaffold(
     //   floatingActionButton: FloatingActionButton(
     //     child: const Icon(Icons.computer),
@@ -39,5 +40,5 @@ class SyllabusHome extends StatelessWidget {
     //   ),
     //
     // );
-  }
+
 }
