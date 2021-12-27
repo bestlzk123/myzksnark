@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapp">
    <application
-        android:label="myapp"
-        android:icon="@mipmap/ic_launcher">
+        android:label="复课旦"
+        android:icon="@mipmap/fkdicon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
