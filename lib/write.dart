@@ -159,7 +159,7 @@ class WritePageState extends State<WritePage> {
     Note note = Note();
     note.title = titles;
     note.content = contents;
-    note.userId = int.parse(SpUtil.preferences.getString("userId")!); // 发帖人id
+    note.userId = SpUtil.preferences.getInt("userId")!; // 发帖人id
     note.reply = 0;
     note.replyId = 1; // 帖子作为回帖的id，当为主题帖时，replyid = 1
 
