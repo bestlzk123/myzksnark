@@ -7,6 +7,7 @@ import 'package:myapp/write.dart';
 import 'entity/note.dart';
 import 'forum_list.dart';
 import 'main.dart';
+import 'draw.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -32,9 +33,9 @@ class HomePageState extends State<HomePage> {
     await DbUtil.noteDbHelper.insert(note);
   }
   Future<String> _gerData() async {
-    //await SpUtil.getInstance();
-    //await DbUtil.getInstance();
-    //if (debugFlag) debugMode();
+    await SpUtil.getInstance();
+    await DbUtil.getInstance();
+    if (debugFlag) debugMode();
     return "ok";
   }
   @override
@@ -52,6 +53,7 @@ class HomePageState extends State<HomePage> {
         builder: (BuildContext context, AsyncSnapshot snapshot){
       if (snapshot.connectionState == ConnectionState.done) {
         return Scaffold(
+          drawer: myDrawerState(id:1),
           body: IndexedStack(
               index: _currentIndex,
               children: [ListPage(), SyllabusHome(), WritePage()]),
