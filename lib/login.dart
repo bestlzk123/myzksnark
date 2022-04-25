@@ -11,7 +11,7 @@ class httpRequest {
     // 1.创建HttpClient对象
     final httpClient = HttpClient();
     const backgroundUrl = '192.168.0.113:8080';
-    // 2.构建请求的uri
+    // 2.构建请求的url
     var uri = Uri.http(
       backgroundUrl, '/timeTable',);
     // 3.构建请求
